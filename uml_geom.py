@@ -7,14 +7,12 @@ def parse_classes(root):
             class_name = "UnknownClass"
             is_abstract = False
             
-            # NEW: Storage for internal properties
             attributes = [] 
             methods = []
 
             if panel_node is not None and panel_node.text:
                 lines = [l.strip() for l in panel_node.text.split('\n') if l.strip()]
                 if lines:
-                    # Parse Name and Abstract status
                     raw_name = lines[0]
                     start_idx = 1
                     if raw_name.startswith("/") and raw_name.endswith("/"):
@@ -30,12 +28,10 @@ def parse_classes(root):
                     else:
                         class_name = raw_name
 
-                    # NEW: Parse Attributes and Methods
                     for line in lines[start_idx:]:
                         if line == "--": 
                             continue # Skip compartment dividers
                         
-                        # Determine Access Modifier
                         modifier = "default/package" # fallback
                         if line.startswith("+"): modifier = "public"
                         elif line.startswith("-"): modifier = "private"
@@ -60,8 +56,8 @@ def parse_classes(root):
                 classes.append({
                     "name": class_name,
                     "is_abstract": is_abstract,
-                    "attributes": attributes, # Added to dictionary
-                    "methods": methods,       # Added to dictionary
+                    "attributes": attributes, 
+                    "methods": methods,       
                     "x_min": x, "x_max": x + w,
                     "y_min": y, "y_max": y + h
                 })
@@ -74,8 +70,8 @@ def parse_relations(root):
         if id_node is not None and id_node.text.strip() == "Relation":
             panel_node = element.find("panel_attributes")
             lt_style = ""
-            m1 = "" # NEW: Start multiplicity
-            m2 = "" # NEW: End multiplicity
+            m1 = "" 
+            m2 = "" 
             
             if panel_node is not None and panel_node.text:
                 for line in panel_node.text.split('\n'):
