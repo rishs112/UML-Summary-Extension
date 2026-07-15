@@ -1,6 +1,5 @@
 import xml.etree.ElementTree as ET
 
-# We will reuse the parsing functions from earlier
 from uml_geom import parse_classes  
 
 RELATION_MAP = {
@@ -46,7 +45,7 @@ def build_class_graph(classes, relations):
             if is_point_in_box(end_x, end_y, cls):
                 target_class = cls["name"]
                 
-        # When a valid connection is found:
+        # When a valid connection is found
         if source_class and target_class:
             english_meaning = RELATION_MAP.get(rel["style"].strip(), "a relationship")
             
@@ -54,8 +53,8 @@ def build_class_graph(classes, relations):
                 "source": source_class,
                 "target": target_class,
                 "relationship": english_meaning,
-                "source_multi": rel["m1"], # NEW
-                "target_multi": rel["m2"]  # NEW
+                "source_multi": rel["m1"], 
+                "target_multi": rel["m2"]  
             })
             
     return graph_edges
