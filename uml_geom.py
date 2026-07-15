@@ -90,8 +90,8 @@ def parse_relations(root):
                 if len(waypoints) >= 4:
                     relations.append({
                         "style": lt_style,
-                        "m1": m1, # Pass start multiplicity
-                        "m2": m2, # Pass end multiplicity
+                        "m1": m1, 
+                        "m2": m2, 
                         "start": (box_x + waypoints[0], box_y + waypoints[1]),
                         "end": (box_x + waypoints[-2], box_y + waypoints[-1])
                     })
