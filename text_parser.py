@@ -12,31 +12,26 @@ def generate_frequency_map(xml_filepath):
         tree = ET.parse(xml_filepath)
         root = tree.getroot()
     except ET.ParseError:
-        return counts # Return empty counter on failure
+        return counts 
 
     for element in root.findall(".//element"):
-        # Track that we found a valid Umletino element
         counts["_TOTAL_ELEMENTS_"] += 1 
         
         id_node = element.find("id")
         panel_node = element.find("panel_attributes")
         
-        # 1. Count the primary Object IDs
         if id_node is not None and id_node.text:
             uml_id = id_node.text.strip()
             counts[uml_id] += 1
             
-        # 2. Dig into panel attributes for sub-types and specific relations
         if panel_node is not None and panel_node.text:
             panel_text = panel_node.text
             
-            # Check for special state sub-types
             if "type=decision" in panel_text: counts["type=decision"] += 1
             if "type=initial" in panel_text: counts["type=initial"] += 1
             if "type=final" in panel_text: counts["type=final"] += 1
             if "type=termination" in panel_text: counts["type=termination"] += 1
             
-            # Check for diagram-specific relationship arrows
             if "lt=<<<<-" in panel_text or "lt=<<<<<-" in panel_text: 
                 counts["class_relation"] += 1
             if "lt=<<<-" in panel_text: 
